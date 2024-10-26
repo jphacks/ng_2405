@@ -128,3 +128,44 @@
 ```
 ### get_gemini (GET /gemini)
 - 言語とテクニックに応じてGeminiにタスク例を考えさせる
+- request bodyに以下のようにしてlanguageとtechniqueを送信する
+```
+{
+    "language": "python",
+    "technique": "forループ"
+}
+```
+- headerにログアウトと同じように以下のkey-valueを追加してリクエストを送信
+```
+{
+  "Authorization": "Bearer [access_token]"
+}
+```
+- Geminiから正常に返ってくると以下のようなJsonが返ってくる
+```
+{
+    "tasks": [
+        {
+            "title": "偶数の合計",
+            "description": "1から10までの偶数の合計を計算してください。",
+            "difficulty": 1,
+            "language": "python",
+            "technique": "forループ"
+        },
+        {
+            "title": "リストの最大値",
+            "description": "与えられたリストから最大値を見つけてください。\nリスト: [5, 2, 8, 1, 9]",
+            "difficulty": 2,
+            "language": "python",
+            "technique": "forループ"
+        },
+        {
+            "title": "フィボナッチ数列",
+            "description": "与えられた数nまでのフィボナッチ数列を生成してください。\n例: n=5\n出力: [0, 1, 1, 2, 3]",
+            "difficulty": 3,
+            "language": "python",
+            "technique": "forループ"
+        }
+    ]
+}
+```
