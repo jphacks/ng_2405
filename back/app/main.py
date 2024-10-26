@@ -172,7 +172,7 @@ def delete_task(task_id: int, current_user: User = Depends(get_current_user), db
     return {"message": "Successfully deleted task"}
 
 @app.patch("/task_done/{task_id}")
-def task_done(task_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+def do_task(task_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     task = db.query(Task).filter(Task.id == task_id).first()
     # タスクが存在しない場合
     if not task:
