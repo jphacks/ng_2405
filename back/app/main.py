@@ -5,7 +5,6 @@ from fastapi.middleware.cors import CORSMiddleware
 import jwt
 import google.generativeai as genai
 import os
-import json
 import time
 from typing import Set
 from database import engine, Base, SessionLocal
