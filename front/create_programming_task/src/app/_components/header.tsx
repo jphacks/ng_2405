@@ -1,5 +1,6 @@
 import React from "react";
 import { AppBar, Typography, Box } from "@mui/material";
+import { PRIMARY_COLOR } from "@/constants/color";
 
 import HeaderLink from "./headerLink";
 
@@ -8,7 +9,7 @@ const Header: React.FC = () => {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: "#a2c1d0",
+        backgroundColor: PRIMARY_COLOR,
       }}
     >
       <Box
