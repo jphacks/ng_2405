@@ -18,3 +18,7 @@ class AddTask(BaseModel):
     title: str
     description: str
     difficulty: int
+
+class TaskComponent(BaseModel):
+    language: str
+    technique: str

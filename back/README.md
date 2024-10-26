@@ -126,3 +126,5 @@
     ]
 }
 ```
+### get_gemini (GET /gemini)
+- 言語とテクニックに応じてGeminiにタスク例を考えさせる
