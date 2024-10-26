@@ -1,8 +1,13 @@
+import React from "react";
 import Link from "next/link";
+
+import Header from "./components/header";
 
 export default function Home() {
   return (
     <div>
+      {/* ヘッダーの表示 */}
+      <Header />
       <h1>Top</h1>
       {/* 確認用のリンク */}
       {/* 後で削除予定 */}
