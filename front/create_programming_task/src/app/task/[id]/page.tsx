@@ -58,7 +58,7 @@ const Page = ({ params }: Props) => {
               >
               <TableCell component="th" scope="row">
                 <Typography style={{ fontWeight: "bold" }}>
-                  課題内容
+                  タスク内容
                 </Typography>
               </TableCell>
               <TableCell>{task.description}</TableCell>
