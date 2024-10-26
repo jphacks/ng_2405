@@ -9,15 +9,15 @@ import time
 from typing import Set
 from database import engine, Base, SessionLocal
 from models import User, Task
-from schemas import UserCreate, LoginUser, TokenData, AddTask, TaskComponent
-from utils import hash_password, authenticate_user, create_access_token, SECRET_KEY, ALGORITHM, validate_Gemini_response
+from schemas import UserCreate, LoginUser, TokenData, TaskData, TaskComponent
+from utils import hash_password, authenticate_user, create_access_token, verificate_user, validate_Gemini_response, SECRET_KEY, ALGORITHM
 from datetime import timedelta, datetime
 
 app = FastAPI()
 
 genai.configure(api_key=os.environ["GEMINI_API_KEY"])
-
 model = genai.GenerativeModel("gemini-1.5-flash",  generation_config={"response_mime_type": "application/json"})
+
 
 origins = [
     "http://localhost:3000",
@@ -117,7 +117,7 @@ def logout(token: str = Depends(oauth2_scheme), current_user: User = Depends(get
     return {"message": "Successfully logged out"}
 
 @app.post("/task")
-def add_task(task: AddTask, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+def add_task(task: TaskData, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     now_date = datetime.now()
     new_task = Task(language=task.language, technique=task.technique, title=task.title, description=task.description, user_id=current_user.id, difficulty=task.difficulty, is_done=False, limit_at=now_date + timedelta(weeks=1))
 
@@ -126,6 +126,22 @@ def add_task(task: AddTask, current_user: User = Depends(get_current_user), db: 
     db.refresh(new_task)
 
     return {"message": "Task created successfully"}
+
+@app.get("/task/{task_id}")
+def get_task(task_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    task = db.query(Task).filter(Task.id == task.id).first()
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    # ユーザーがタスクを削除する権限がない場合
+    if verificate_user(db, task_id, current_user.id) is False:
+        raise HTTPException(status_code=403, detail="You are not authorized to see this task")
+    
+    task_dict = task.to_dict()
+    limit: datetime = task_dict['limit_at']
+    task_dict['limit_at'] = '%s/%s/%s' % (limit.year, limit.month, limit.day)
+    
+    result = {'task': task_dict}
+    return result
 
 @app.get("/tasks")
 def get_all_tasks(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
@@ -139,6 +155,63 @@ def get_all_tasks(current_user: User = Depends(get_current_user), db: Session = 
     
     result = {'tasks': task_list}
     return result
+
+
+@app.delete("/task/{task_id}")
+def delete_task(task_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    task = db.query(Task).filter(Task.id == task_id).first()
+    # タスクが存在しない場合
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    # ユーザーがタスクを削除する権限がない場合
+    if verificate_user(db, task_id, current_user.id) is False:
+        raise HTTPException(status_code=403, detail="You are not authorized to delete this task")
+    # タスクを削除
+    else:
+        task = db.query(Task).filter(Task.id == task_id).first()
+        db.delete(task)
+        db.commit()
+    return {"message": "Successfully deleted task"}
+
+@app.patch("/task_done/{task_id}")
+def task_done(task_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    task = db.query(Task).filter(Task.id == task_id).first()
+    # タスクが存在しない場合
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    # ユーザーがタスクを完了する権限がない場合
+    if verificate_user(db, task_id, current_user.id) is False:
+        raise HTTPException(status_code=403, detail="You are not authorized to complete this task")
+    # タスクを完了
+    task.is_done = True
+    db.commit()
+    return {"message": "Task completed successfully"}
+
+
+@app.patch("/task/{task_id}")
+def edit_task(task_id: int, task: TaskData, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    # タスクを取得
+    existing_task = db.query(Task).filter(Task.id == task_id).first()
+    
+    # タスクが存在しない場合
+    if not existing_task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    
+    # ユーザーがタスクを編集する権限がない場合
+    if not verificate_user(db, task_id, current_user.id):
+        raise HTTPException(status_code=403, detail="You are not authorized to edit this task")
+    
+    # タスクを編集
+    existing_task.language = task.language
+    existing_task.technique = task.technique
+    existing_task.title = task.title
+    existing_task.description = task.description
+    existing_task.difficulty = task.difficulty
+    
+    # 変更をデータベースにコミット
+    db.commit()
+    
+    return {"message": "Task edited successfully"}
 
 @app.get("/gemini")
 def get_task_from_Gemini(task_componnent: TaskComponent, current_user: User = Depends(get_current_user)):
