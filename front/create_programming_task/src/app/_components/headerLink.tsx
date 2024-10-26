@@ -6,6 +6,9 @@ import { deleteAccessToken, getAccessToken } from "../../lib/actions";
 import Link from "next/link";
 import { Typography, Box } from "@mui/material";
 import styles from "./headerLink.module.css";
+import '../globals.css';
+import { TERTIARY_COLOR } from "@/constants/color";
+import { FONT } from "@/constants/font";
 
 // ログインしている場合はログアウトリンクを表示
 // ログインしていない場合はログインリンクを表示
@@ -55,39 +58,60 @@ const HeaderLink = () => {
     >
       <Link href="/" className={styles.link}>
         <Typography
-          sx={{
+          sx={[
+            {
+              '&:hover': {
+                color: TERTIARY_COLOR,
+              },
+            },
+            {
             color: "white",
             whiteSpace: "nowrap",
             fontWeight: "bold",
             fontSize: "1.5rem",
-            marginRight: "1rem",
-          }}
+            marginRight: "1.5rem",
+            // fontFamily: FONT,
+          }]}
         >
           トップページ
         </Typography>
       </Link>
       <Link href="/tasks" className={styles.link}>
         <Typography
-          sx={{
+          sx={[
+            {
+              '&:hover': {
+                color: TERTIARY_COLOR,
+              },
+            },
+            {
             color: "white",
             whiteSpace: "nowrap",
             fontWeight: "bold",
             fontSize: "1.5rem",
-            marginRight: "1rem",
-          }}
+            marginRight: "1.5rem",
+            // fontFamily: FONT,
+          }]}
         >
           タスク一覧
         </Typography>
       </Link>
       {accessToken !== "" ? (
         <Typography
-          sx={{
+          sx={[
+            {
+              '&:hover': {
+                color: TERTIARY_COLOR,
+              },
+            },
+            {
             color: "white",
             whiteSpace: "nowrap",
             cursor: "pointer",
             fontWeight: "bold",
             fontSize: "1.5rem",
-          }}
+            // fontFamily: FONT,
+          }]}
           onClick={handleLogout}
         >
           ログアウト
@@ -95,12 +119,19 @@ const HeaderLink = () => {
       ) : (
         <Link href="/log_in" className={styles.link}>
           <Typography
-            sx={{
+            sx={[
+              {
+                '&:hover': {
+                  color: TERTIARY_COLOR,
+                },
+              },
+              {
               color: "white",
               whiteSpace: "nowrap",
               fontWeight: "bold",
               fontSize: "1.5rem",
-            }}
+              // fontFamily: FONT,
+            }]}
           >
             ログイン
           </Typography>
