@@ -135,6 +135,8 @@
     "description": "test_description",
     "user_id": 3,
     "difficulty": 1,
+    "example": "[1, 2, 3, 4, 5]",
+    "answer": 15,
     "is_done": false,
     "limit_at": "2024/11/2"
 }
@@ -170,6 +172,8 @@
             "technique": "test_technique",
             "title": "test_title",
             "description": "test_description",
+            "example": [1, 2, 3, 4, 5],
+            "answer": "15",
             "user_id": 1,
             "difficulty": 1,
             "is_done": false,
@@ -181,6 +185,8 @@
             "technique": "test_technique2",
             "title": "test_title2",
             "description": "test_description2",
+            "example": "[1, 2, 3, 4, 5]",
+            "answer": "15",
             "user_id": 1,
             "difficulty": 2,
             "is_done": false,
@@ -221,13 +227,15 @@
   "Authorization": "Bearer [access_token]"
 }
 ```
-- bodyにtasの情報を全て含める
+- bodyにtaskの情報を全て含める
 ```
 {
     "language": "test_language",
     "technique": "test_technique",
     "title": "test_title",
     "description": "test_description",
+    "example": "[1, 2, 3, 4, 6]",
+    "answer": "16",
     "difficulty": 2
 }
 ```
@@ -272,6 +280,8 @@ taskにアクセスできない場合は以下が返ってくる。
             "title": "偶数の合計",
             "description": "1から10までの偶数の合計を計算してください。",
             "difficulty": 1,
+            "example": "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+            "answer": "55"
             "language": "python",
             "technique": "forループ"
         },
@@ -279,6 +289,8 @@ taskにアクセスできない場合は以下が返ってくる。
             "title": "リストの最大値",
             "description": "与えられたリストから最大値を見つけてください。\nリスト: [5, 2, 8, 1, 9]",
             "difficulty": 2,
+            "example": "[5, 2, 8, 1, 9]",
+            "answer": "9",
             "language": "python",
             "technique": "forループ"
         },
@@ -286,6 +298,8 @@ taskにアクセスできない場合は以下が返ってくる。
             "title": "フィボナッチ数列",
             "description": "与えられた数nまでのフィボナッチ数列を生成してください。\n例: n=5\n出力: [0, 1, 1, 2, 3]",
             "difficulty": 3,
+            "example": "5",
+            "answer": "[0, 1, 1, 2, 3]"
             "language": "python",
             "technique": "forループ"
         }
