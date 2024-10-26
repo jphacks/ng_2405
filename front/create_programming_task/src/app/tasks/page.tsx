@@ -55,7 +55,7 @@ const dummyTasks: Task[] = [
 const dummyLanguages: Language[] = ["Python3", "Ruby"];
 
 const Page: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>(dummyTasks);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   const [selectedLanguage, setSelectedLanguage] = useState<Language | "All">(
     "All"
@@ -86,13 +86,13 @@ const Page: React.FC = () => {
 
         if (response.ok) {
           // タスク追加の処理ができたらコメントアウトを外して機能を確認する
-          // setTasks(responseJson.tasks);
+          setTasks(responseJson.tasks);
           // 言語の一覧を取得
-          // const languages: Language[] = responseJson.tasks.map(
-          //   (task: Task) => task.language
-          // );
-          // const uniqueLanguages = Array.from(new Set(languages));
-          // setLanguages(uniqueLanguages);
+          const languages: Language[] = responseJson.tasks.map(
+            (task: Task) => task.language
+          );
+          const uniqueLanguages = Array.from(new Set(languages));
+          setLanguages(uniqueLanguages);
         } else {
           alert("タスクの取得に失敗しました。");
         }
