@@ -1,3 +1,4 @@
+import React from "react";
 import Link from "next/link";
 
 export default function Home() {
@@ -8,6 +9,9 @@ export default function Home() {
       {/* 後で削除予定 */}
       <Link href="/log_in">
         <p>log in</p>
+      </Link>
+      <Link href="/sign_up">
+        <p>sign up</p>
       </Link>
       <Link href="/tasks">
         <p>tasks</p>

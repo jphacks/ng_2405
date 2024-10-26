@@ -35,7 +35,7 @@ const Page = () => {
   const { control, handleSubmit } = useForm<FormValues>();
 
   // submitされた情報でログイン処理を行う
-  // endpoint: http://localhost:8000/log_in (method: POST)
+  // endpoint: http://localhost:8000/sign_up (method: POST)
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     console.log(`data: ${JSON.stringify(data)}`);
     const response = await fetch("http://localhost:8000/sign_up", {
