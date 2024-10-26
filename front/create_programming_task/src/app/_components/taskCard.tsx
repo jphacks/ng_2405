@@ -21,7 +21,6 @@ const TaskCard = ({ task }: Props) => {
   return (
     <Card sx={{
       boxShadow: "10px 5px 5px lightGray",
-      // border
       backgroundColor: "whitesmoke"
     }}>
       <CardContent>

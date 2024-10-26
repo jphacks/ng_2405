@@ -1,8 +1,11 @@
 import React from "react";
 import { AppBar, Typography, Box } from "@mui/material";
 import { PRIMARY_COLOR } from "@/constants/color";
+import { FONT } from "@/constants/font";
 
 import HeaderLink from "./headerLink";
+
+import '../globals.css';
 
 const Header: React.FC = () => {
   return (
@@ -19,10 +22,16 @@ const Header: React.FC = () => {
           alignItems: "center",
           padding: "1rem",
         }}
-      >
-        {/* TODO テキストの内容は検討 */}
-        <Typography variant="h3" sx={{ color: "black" }}>
-          Programming Task Manager
+        >
+        <Typography
+          variant="h3"
+          sx={{
+            color: "black",
+            // fontFamily: FONT,
+            fontWeight: "bold",
+          }}
+          >
+          ハックドリル
         </Typography>
         <HeaderLink />
       </Box>
