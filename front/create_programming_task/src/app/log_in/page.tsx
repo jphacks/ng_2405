@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { setAccessToken } from "../lib/actions";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import {
   Container,
@@ -50,13 +51,14 @@ const Page = () => {
       const responseJson = await response.json();
       console.log(`response: ${JSON.stringify(responseJson)}`);
 
-      if (response.status === 200) {
+      if (response.ok) {
         // ログイン成功時の処理
         // ログイン後のページにリダイレクト
         // cookieにaccess_tokenを保存
-        document.cookie = `access_token=${responseJson.access_token}; path=/; secure`;
+        console.log(`access_token: ${responseJson.access_token}`);
+        await setAccessToken(responseJson.access_token);
         window.location.href = "/";
-      } else if (response.status === 401) {
+      } else {
         // ログイン失敗時の処理
         alert("ログインに失敗しました。");
       }
