@@ -10,8 +10,12 @@ import {
   Select,
   MenuItem,
   FormHelperText,
+  Input,
+  TextField,
+  OutlinedInput,
   Button
 } from "@mui/material";
+import { PRIMARY_COLOR } from "@/constants/color";
 
 // プログラミング言語のリスト
 const languages = [
@@ -50,7 +54,7 @@ const languages = [
 
 type FormValues = {
   language: string;
-  // technique: string;
+  technique: string;
 };
 
 export default function Home() {
@@ -80,7 +84,13 @@ export default function Home() {
         // onSubmit={handleSubmit(onSubmit)}
       >
         {/* 学習したプログラミング言語の選択欄 */}
-        <FormControl required sx={{ m: 1, minWidth: 120 }}>
+        <FormControl
+          required
+          sx={{
+            m: 1,
+            width: "50%"
+          }}
+        >
           <InputLabel id="select-language-label">学習言語</InputLabel>
           <Select
             labelId="select-language-label"
@@ -94,13 +104,26 @@ export default function Home() {
             </MenuItem>
             {menuItems}
           </Select>
-          <FormHelperText>*必須</FormHelperText>
         </FormControl>
-        {/* ここに学習内容の入力欄を挿入する */}
+        {/* 学習内容の入力欄 */}
+        <TextField
+          required
+          id="outlined-required"
+          label="学習内容"
+          defaultValue=""
+          sx={{
+            width: "50%"
+          }}
+          multiline
+          rows={3}
+        />
+        {/* タスク作成ボタン */}
         <Button
           variant="contained"
           sx={{
-            width: "10%",
+            width: "50%",
+            backgroundColor: PRIMARY_COLOR,
+            m: 1
           }}
           type="submit"
           >
