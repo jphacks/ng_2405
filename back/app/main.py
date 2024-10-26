@@ -129,19 +129,17 @@ def add_task(task: TaskData, current_user: User = Depends(get_current_user), db:
 
 @app.get("/task/{task_id}")
 def get_task(task_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    task = db.query(Task).filter(Task.id == task.id).first()
+    task = db.query(Task).filter(Task.id == task_id).first()
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
     # ユーザーがタスクを削除する権限がない場合
     if verificate_user(db, task_id, current_user.id) is False:
-        raise HTTPException(status_code=403, detail="You are not authorized to see this task")
+        raise HTTPException(status_code=403, detail="You are not authorized to get detail of this task")
     
     task_dict = task.to_dict()
     limit: datetime = task_dict['limit_at']
     task_dict['limit_at'] = '%s/%s/%s' % (limit.year, limit.month, limit.day)
-    
-    result = {'task': task_dict}
-    return result
+    return task_dict
 
 @app.get("/tasks")
 def get_all_tasks(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
@@ -174,7 +172,7 @@ def delete_task(task_id: int, current_user: User = Depends(get_current_user), db
     return {"message": "Successfully deleted task"}
 
 @app.patch("/task_done/{task_id}")
-def task_done(task_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+def do_task(task_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     task = db.query(Task).filter(Task.id == task_id).first()
     # タスクが存在しない場合
     if not task:

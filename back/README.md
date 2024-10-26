@@ -91,6 +91,67 @@
     "message": "Task created successfully"
 }
 ```
+### delete_task(DELETE /task/{task_id})
+- 指定したIDを持つタスクをGETするAPI
+- headerにアクセストークンを追加してリクエストを送信
+```
+{
+  "Authorization": "Bearer [access_token]"
+}
+```
+成功すると以下が返ってくる
+```
+{
+    "message": "Successfully deleted task"
+}
+```
+タスクが存在しない場合は以下が返ってくる。
+```
+{
+    "detail": "Task not found"
+}
+```
+タスクが存在するが、アクセスできない場合は以下が返ってくる。
+```
+{
+    "detail": "You are not authorized to delete this task"
+}
+```
+### get_task(GET /task/{task_id})
+- 指定したIDを持つタスクをGETするAPI
+- headerにアクセストークンを追加してリクエストを送信
+```
+{
+  "Authorization": "Bearer [access_token]"
+}
+```
+- ログインしているユーザがタスクを確認できる場合は以下のようなレスポンスが返ってくる。
+```
+{
+    "id": 17,
+    "language": "test_language",
+    "technique": "test_technique",
+    "title": "test_title",
+    "description": "test_description",
+    "user_id": 3,
+    "difficulty": 1,
+    "is_done": false,
+    "limit_at": "2024/11/2"
+}
+```
+タスクが存在しない場合は以下が返ってくる
+```
+{
+    "detail": "Task not found"
+}
+```
+タスクが存在するが、アクセスできない場合は以下が返ってくる。
+```
+{
+    "detail": "You are not authorized to get detail of this task"
+}
+```
+
 ### get_tasks (GET /tasks)
 - ログインしているユーザーのすべてのタスクをGETするAPI
 - headerにログアウトと同じように以下のkey-valueを追加してリクエストを送信
@@ -126,6 +187,66 @@
             "limit_at": "2024/11/1"
         }
     ]
+}
+```
+### do_task (PATCH /done_task/{task_id})
+- taskの達成フラグをtrueにする
+- headerにアクセストークンを追加してリクエストを送信
+```
+{
+  "Authorization": "Bearer [access_token]"
+}
+```
+- 成功すると以下が返ってくる。
+{
+    "message": "Task completed successfully"
+}
+タスクが存在しない場合は以下が返ってくる
+```
+{
+    "detail": "Task not found"
+}
+```
+タスクが存在するが、アクセスできない場合は以下が返ってくる。
+```
+{
+    "detail": "You are not authorized to complete this task"
+}
+```
+### edit_task (PATCH /task/id)
+- taskの情報を編集する
+- headerにアクセストークンを追加してリクエストを送信
+```
+{
+  "Authorization": "Bearer [access_token]"
+}
+```
+- bodyにtasの情報を全て含める
+```
+{
+    "language": "test_language",
+    "technique": "test_technique",
+    "title": "test_title",
+    "description": "test_description",
+    "difficulty": 2
+}
+```
+成功すると、以下が返ってくる。
+```
+{
+    "message": "Task edited successfully"
+}
+```
+taskが存在しない場合は以下が返ってくる。
+```
+{
+    "detail": "Task not found"
+}
+```
+taskにアクセスできない場合は以下が返ってくる。
+```
+{
+    "detail": "You are not authorized to edit this task"
 }
 ```
 ### get_gemini (GET /gemini)
