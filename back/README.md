@@ -70,11 +70,13 @@
 - request bodyに以下のようなJsonでタスク情報を送信する
 ```
 {
-  "language": "test_language",
-  "technique": "test_technique",
-  "title": "test_title",
-  "description": "test_description",
-  "difficulty": 1
+    "title": "リストの要素を順番に出力する",
+    "description": "与えられたリストの要素を順番に出力するプログラムを作成してください。",
+    "difficulty": 1,
+    "example": "[1, 2, 3, 4, 5]",
+    "answer": "1\n2\n3\n4\n5",
+    "language": "python",
+    "technique": "forループ"
 }
 ```
 - headerにはログアウトと同じように以下のkey-valueを追加しておく
