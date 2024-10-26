@@ -5,11 +5,13 @@ from fastapi.middleware.cors import CORSMiddleware
 import jwt
 import google.generativeai as genai
 import os
+import json
+import time
 from typing import Set
 from database import engine, Base, SessionLocal
 from models import User, Task
 from schemas import UserCreate, LoginUser, TokenData, AddTask, TaskComponent
-from utils import hash_password, authenticate_user, create_access_token, SECRET_KEY, ALGORITHM
+from utils import hash_password, authenticate_user, create_access_token, SECRET_KEY, ALGORITHM, validate_Gemini_response
 from datetime import timedelta, datetime
 
 app = FastAPI()
@@ -142,6 +144,7 @@ def get_all_tasks(current_user: User = Depends(get_current_user), db: Session = 
 @app.get("/gemini")
 def get_task_from_Gemini(task_componnent: TaskComponent, current_user: User = Depends(get_current_user)):
     prompt = f'''{task_componnent.language}で{task_componnent.technique}だけを使ったタスクの例を３段階の難易度で１つずつJson形式で提案してください．
+    実際の値も含んでください
     keyには以下の項目を含んでください．
     - "title"
     - "description"
@@ -151,5 +154,16 @@ def get_task_from_Gemini(task_componnent: TaskComponent, current_user: User = De
     "description"にはタスクの詳細な説明をvalueに入れてください．
     "difficulty"にはタスクの難易度を数字の1か2か3でvalueに入れてください．
     難易度は1が一番易しく，2が中間，3が一番難しいです．'''
-    response = model.generate_content(prompt)
-    print(response)
+    while True:
+        response = model.generate_content(prompt)
+        response_json = validate_Gemini_response(response.text)
+        if response_json != False:
+            break
+        time.sleep(1)
+    
+    for i in range(3):
+        response_json[i]['language'] = task_componnent.language
+        response_json[i]['technique'] = task_componnent.technique
+        
+
+    return {"tasks": response_json}
