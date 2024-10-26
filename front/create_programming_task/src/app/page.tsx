@@ -12,7 +12,8 @@ import {
   Select,
   MenuItem,
   TextField,
-  Button
+  OutlinedInput,
+  Button,
 } from "@mui/material";
 import TaskCard from "./_components/taskCard";
 
@@ -51,8 +52,13 @@ const languages = [
   "Scheme",
   "Swift",
   "TypeScript",
-  "VB"
-]
+  "VB",
+];
+
+type FormValues = {
+  language: string;
+  technique: string;
+};
 
 const dummyTasks: Task[] = [
   {
@@ -90,11 +96,6 @@ const dummyTasks: Task[] = [
   },
 ];
 
-type FormValues = {
-  language: string;
-  technique: string;
-};
-
 export default function Home() {
   // タスク表示用
   const [tasks, setTasks] = useState<Task[]>(dummyTasks);
@@ -106,10 +107,9 @@ export default function Home() {
     setLanguage(event.target.value);
   };
 
-  // 選択可能なプログラミング言語
-  const menuItems = languages.map(language =>
+  const menuItems = languages.map((language) => (
     <MenuItem value={language}>{language}</MenuItem>
-  );
+  ));
 
   return (
     <Container>
