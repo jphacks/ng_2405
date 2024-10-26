@@ -9,6 +9,9 @@ export default function Home() {
       <Link href="/log_in">
         <p>log in</p>
       </Link>
+      <Link href="/sign_up">
+        <p>sign up</p>
+      </Link>
       <Link href="/tasks">
         <p>tasks</p>
       </Link>
