@@ -17,6 +17,8 @@ class Task(Base):
     technique = Column(String(50))
     title = Column(String(50))
     description = Column(String(100))
+    example = Column(String(100))
+    answer = Column(String(100))
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))  # Foreign Key（"mysql+pymysql://root@db:3306/demo"親が削除されたら削除）
     difficulty = Column(Integer, CheckConstraint("difficulty in (1, 2, 3)"))  # Check制約（1, 2, 3のいずれか）   
     is_done = Column(Boolean, default=False)
@@ -29,6 +31,8 @@ class Task(Base):
                 'technique': self.technique,
                 'title': self.title,
                 'description': self.description,
+                'example': self.example,
+                'answer': self.answer,
                 'user_id': self.user_id,
                 'difficulty': self.difficulty,
                 'is_done': self.is_done,

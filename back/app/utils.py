@@ -61,4 +61,8 @@ def validate_Gemini_response(text):
             ans = False
         if not 'difficulty' in text_json[i] or text_json[i]['difficulty'] != i + 1:
             ans = False
+        if not 'example' in text_json[i]:
+            ans = False
+        if not 'answer' in text_json[i]:
+            ans = False
     return ans

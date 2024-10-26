@@ -19,7 +19,8 @@ class TaskData(BaseModel):
     technique: str
     title: str
     description: str
-    user_id: int | None
+    example: str
+    answer: str
     difficulty: int
     is_done: bool | None
     limit_at: datetime | None
