@@ -43,3 +43,22 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
+
+def validate_Gemini_response(text):
+    try:
+        text_json = json.loads(text)
+    except json.decoder.JSONDecodeError:
+        return False
+    
+    if len(text_json) != 3:
+        return False
+    ans = text_json
+    for i in range(3):
+        if not 'title' in text_json[i]:
+            ans = False
+        if not 'description' in text_json[i]:
+            ans = False
+        if not 'difficulty' in text_json[i] or text_json[i]['difficulty'] != i + 1:
+            ans = False
+    return ans
