@@ -73,6 +73,21 @@ const Page: React.FC = () => {
       } else {
         // ログインしている場合の処理
         // タスクの取得処理を書く
+        // タスクの追加処理を書く
+        // http://localhost:8000/tasks (method: POST)
+        // const res = await fetch("http://localhost:8000/task", {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //     Authorization: `Bearer ${accessToken}`,
+        //   },
+        //   body: JSON.stringify(dummyTasks[1]),
+        // });
+
+        // if (res.ok) {
+        //   console.log("タスクの追加に成功しました。");
+        // }
+
         // http://localhost:8000/tasks (method: GET)
         const response = await fetch("http://localhost:8000/tasks", {
           method: "GET",
