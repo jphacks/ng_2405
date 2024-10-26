@@ -3,14 +3,20 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 import jwt
+import google.generativeai as genai
+import os
 from typing import Set
 from database import engine, Base, SessionLocal
 from models import User, Task
-from schemas import UserCreate, LoginUser, TokenData, AddTask
+from schemas import UserCreate, LoginUser, TokenData, AddTask, TaskComponent
 from utils import hash_password, authenticate_user, create_access_token, SECRET_KEY, ALGORITHM
 from datetime import timedelta, datetime
 
 app = FastAPI()
+
+genai.configure(api_key=os.environ["GEMINI_API_KEY"])
+
+model = genai.GenerativeModel("gemini-1.5-flash",  generation_config={"response_mime_type": "application/json"})
 
 origins = [
     "http://localhost:3000",
@@ -132,3 +138,18 @@ def get_all_tasks(current_user: User = Depends(get_current_user), db: Session = 
     
     result = {'tasks': task_list}
     return result
+
+@app.get("/gemini")
+def get_task_from_Gemini(task_componnent: TaskComponent, current_user: User = Depends(get_current_user)):
+    prompt = f'''{task_componnent.language}で{task_componnent.technique}だけを使ったタスクの例を３段階の難易度で１つずつJson形式で提案してください．
+    keyには以下の項目を含んでください．
+    - "title"
+    - "description"
+    - "difficulty"
+    
+    "title"にはタスクのタイトルをvalueに入れてください．
+    "description"にはタスクの詳細な説明をvalueに入れてください．
+    "difficulty"にはタスクの難易度を数字の1か2か3でvalueに入れてください．
+    難易度は1が一番易しく，2が中間，3が一番難しいです．'''
+    response = model.generate_content(prompt)
+    print(response)
