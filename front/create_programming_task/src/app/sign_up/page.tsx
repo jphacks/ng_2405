@@ -10,6 +10,7 @@ import {
   Typography,
   TextField,
 } from "@mui/material";
+import { PRIMARY_COLOR } from "@/constants/color";
 
 type FormValues = {
   username: string;
@@ -122,6 +123,8 @@ const Page = () => {
             variant="contained"
             sx={{
               width: "80%",
+              color: "white",
+              background: "#0ea5dc"
             }}
             type="submit"
           >
