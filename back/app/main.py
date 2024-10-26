@@ -119,7 +119,7 @@ def logout(token: str = Depends(oauth2_scheme), current_user: User = Depends(get
 @app.post("/task")
 def add_task(task: TaskData, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     now_date = datetime.now()
-    new_task = Task(language=task.language, technique=task.technique, title=task.title, description=task.description, user_id=current_user.id, difficulty=task.difficulty, is_done=False, limit_at=now_date + timedelta(weeks=1))
+    new_task = Task(language=task.language, technique=task.technique, title=task.title, description=task.description, example=task.example, answer=task.answer, user_id=current_user.id, difficulty=task.difficulty, is_done=False, limit_at=now_date + timedelta(weeks=1))
 
     db.add(new_task)
     db.commit()
@@ -216,21 +216,28 @@ def edit_task(task_id: int, task: TaskData, current_user: User = Depends(get_cur
 @app.get("/gemini")
 def get_task_from_Gemini(task_componnent: TaskComponent, current_user: User = Depends(get_current_user)):
     prompt = f'''{task_componnent.language}で{task_componnent.technique}だけを使ったタスクの例を３段階の難易度で１つずつJson形式で提案してください．
-    実際の値も含んでください
     keyには以下の項目を含んでください．
     - "title"
     - "description"
     - "difficulty"
+    - "example"
+    - "answer"
     
     "title"にはタスクのタイトルをvalueに入れてください．
     "description"にはタスクの詳細な説明をvalueに入れてください．
     "difficulty"にはタスクの難易度を数字の1か2か3でvalueに入れてください．
-    難易度は1が一番易しく，2が中間，3が一番難しいです．'''
+    難易度は1が一番易しく，2が中間，3が一番難しいです．
+    "example"には具体的な値をvalueに入れてください．
+    "answer"には"example"に対する出力結果をvalueに入れてください．'''
+    i = 0
     while True:
+        i += 1
         response = model.generate_content(prompt)
         response_json = validate_Gemini_response(response.text)
         if response_json != False:
             break
+        if i >= 5:
+            raise HTTPException(status_code=402, detail="Failed to get gemini response")
         time.sleep(1)
     
     for i in range(3):
