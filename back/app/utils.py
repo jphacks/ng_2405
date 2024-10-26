@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 from passlib.context import CryptContext
 import jwt
+import json
 from typing import Optional
 from datetime import datetime, timedelta, timezone
 from models import User, Task
@@ -26,6 +27,13 @@ def authenticate_user(db, username: str, password: str):
         return False
     return user
 
+def verificate_user(db, task_id: int, user_id: int):
+    # アクセスしたユーザがタスクにアクセスできるかを確認する関数
+    task = db.query(Task).filter(Task.id == task_id).first()
+    if task.user_id != user_id:
+        return False
+    return True
+
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
     if expires_delta:
@@ -35,11 +43,3 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
-
-def verificate_user(db, task_id: int, user_id: int):
-    # アクセスしたユーザがタスクにアクセスできるかを確認する関数
-    task = db.query(Task).filter(Task.id == task_id).first()
-    if task.user_id != user_id:
-        return False
-    return True
-    

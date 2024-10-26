@@ -1,4 +1,16 @@
 import React from "react";
+import {
+  Container,
+  Chip,
+  Typography,
+  Rating,
+  TableContainer,
+  Paper,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell
+} from "@mui/material";
 
 type Props = {
   params: {
@@ -14,40 +26,47 @@ const task = {
   title: "sum1to10",
   description: "What's the sum of 1 to 10?",
   user_id: "3",
-  difficulty: "2"
+  difficulty: 2
 };
 
 const Page = ({ params }: Props) => {
   return (
-    <div>
-      <h1>Task</h1>
-      {/* 最終的には消す */}
-      <p>task id: {params.id}</p>
+    <Container>
+      <h1>{task.title}</h1>
+      <Chip label={task.language} />
+      <Typography component="legend">難易度</Typography>
+      <Rating name="difficulty" value={task.difficulty} max={3} readOnly />
 
       {/* とりあえず表形式で表示 */}
-      <table>
-        <tr>
-          <th>プログラミング言語</th>
-          <td>{task.language}</td>
-        </tr>
-        <tr>
-          <th>学んだこと</th>
-          <td>{task.technique}</td>
-        </tr>
-        <tr>
-          <th>task名</th>
-          <td>{task.title}</td>
-        </tr>
-        <tr>
-          <th>説明</th>
-          <td>{task.description}</td>
-        </tr>
-        <tr>
-          <th>難易度</th>
-          <td>{task.difficulty}</td>
-        </tr>
-      </table>
-    </div>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableBody>
+            <TableRow
+              key={task.technique}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+              <TableCell component="th" scope="row">
+                <Typography style={{ fontWeight: "bold" }}>
+                  学習内容
+                </Typography>
+              </TableCell>
+              <TableCell>{task.technique}</TableCell>
+            </TableRow>
+            <TableRow
+              key={task.description}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+              <TableCell component="th" scope="row">
+                <Typography style={{ fontWeight: "bold" }}>
+                  タスク内容
+                </Typography>
+              </TableCell>
+              <TableCell>{task.description}</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 };
 

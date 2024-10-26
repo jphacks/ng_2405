@@ -23,3 +23,7 @@ class TaskData(BaseModel):
     difficulty: int
     is_done: bool | None
     limit_at: datetime | None
+
+class TaskComponent(BaseModel):
+    language: str
+    technique: str
