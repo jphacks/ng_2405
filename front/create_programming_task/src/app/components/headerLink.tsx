@@ -54,6 +54,7 @@ const HeaderLink = () => {
       <Link href="/" className={styles.link}>
         <Typography
           sx={{
+            color: "white",
             whiteSpace: "nowrap",
             fontWeight: "bold",
             fontSize: "1.5rem",
@@ -66,6 +67,7 @@ const HeaderLink = () => {
       <Link href="/tasks" className={styles.link}>
         <Typography
           sx={{
+            color: "white",
             whiteSpace: "nowrap",
             fontWeight: "bold",
             fontSize: "1.5rem",
@@ -78,6 +80,7 @@ const HeaderLink = () => {
       {accessToken !== "" ? (
         <Typography
           sx={{
+            color: "white",
             whiteSpace: "nowrap",
             cursor: "pointer",
             fontWeight: "bold",
@@ -91,6 +94,7 @@ const HeaderLink = () => {
         <Link href="/log_in" className={styles.link}>
           <Typography
             sx={{
+              color: "white",
               whiteSpace: "nowrap",
               fontWeight: "bold",
               fontSize: "1.5rem",
