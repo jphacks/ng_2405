@@ -90,9 +90,10 @@ https://chatgpt.com/c/6713a602-6674-8011-9963-8584efd26472
 - log out (GET /log_out)
 - GPTにpromptを投げて出力をゲットするapi (GET /gpt)
 - DBにtaskを追加 (POST /task)
-- task編集 (PATCH /task)
-- task削除 (DELETE /task)
-- taskの達成フラグをtrue (POST /task_done)
+- task編集 (PATCH /task/{task_id})
+- task削除 (DELETE /task/{task_id})
+- taskの達成フラグをtrue (POST /task_done/{task_id})
+- 特定のtaskを取得(GET /task/{task_id})
 - userのtask一覧を取得 (GET /tasks)
 
 
@@ -142,8 +143,8 @@ https://chatgpt.com/c/6713a602-6674-8011-9963-8584efd26472
 - back
     - localhost:8000
     - docker
-        - ~イメージビルド: docker build -t myimage .~
-        - ~コンテナの起動: docker run -d --name mycontainer -p 80:80 myimage~
+        - <s>イメージビルド: docker build -t myimage .</s>
+        - <s>コンテナの起動: docker run -d --name mycontainer -p 80:80 myimage</s>
         - まずdbを立ち上げる: docker compose up -d db
         - 次にdemo-appを立ち上げる: docker compose up -d demo-app
         - docker exec -it demo-app bash でdemo-app内のbashに入れる
