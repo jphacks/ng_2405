@@ -38,31 +38,16 @@ const Page = () => {
   // endpoint: http://localhost:8000/log_in (method: POST)
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     console.log(`data: ${JSON.stringify(data)}`);
-    try {
-      const response = await fetch("http://localhost:8000/log_in", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-        credentials: "include",
-      });
-      const responseJson = await response.json();
-      console.log(`response: ${JSON.stringify(responseJson)}`);
-
-      if (response.status === 200) {
-        // ログイン成功時の処理
-        // ログイン後のページにリダイレクト
-        // cookieにaccess_tokenを保存
-        document.cookie = `access_token=${responseJson.access_token}; path=/; secure`;
-        window.location.href = "/";
-      } else if (response.status === 401) {
-        // ログイン失敗時の処理
-        alert("ログインに失敗しました。");
-      }
-    } catch (error) {
-      console.error(`error: ${error}`);
-    }
+    const response = await fetch("http://localhost:8000/sign_up", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      credentials: "include",
+    });
+    const responseJson = await response.json();
+    console.log(`response: ${JSON.stringify(responseJson)}`);
   };
 
   return (
@@ -77,7 +62,7 @@ const Page = () => {
         }}
       >
         <Typography variant="h4" gutterBottom>
-          ログイン
+          ユーザー登録
         </Typography>
         <Box
           sx={{
@@ -140,7 +125,7 @@ const Page = () => {
             }}
             type="submit"
           >
-            ログイン
+            登録
           </Button>
         </Box>
       </Box>

@@ -58,9 +58,71 @@
   "message": "Successfully logged out"
 }
 ```
-- 不正なアクセストークだった場合，以下のような形式のJsonファイルが返ってくる (status code: 401)
+- 不正なアクセストークンだった場合，以下のような形式のJsonファイルが返ってくる (status code: 401)
 ```json
 {
     "detail": "Could not validate credentials"
+}
+```
+
+### add_task (POST /task)
+- タスクの追加を行うAPI
+- request bodyに以下のようなJsonでタスク情報を送信する
+```
+{
+  "language": "test_language",
+  "technique": "test_technique",
+  "title": "test_title",
+  "description": "test_description",
+  "difficulty": 1
+}
+```
+- headerにはログアウトと同じように以下のkey-valueを追加しておく
+```
+{
+  "Authorization": "Bearer [access_token]"
+}
+```
+- タスクの生成に成功したら以下のようなJsonが返ってくる
+```
+{
+    "message": "Task created successfully"
+}
+```
+### get_tasks (GET /tasks)
+- ログインしているユーザーのすべてのタスクをGETするAPI
+- headerにログアウトと同じように以下のkey-valueを追加してリクエストを送信
+```
+{
+  "Authorization": "Bearer [access_token]"
+}
+```
+- すべてのタスクをGETすることに成功したら以下のようなJsonが返ってくる
+```
+{
+    "tasks": [
+        {
+            "id": 1,
+            "language": "test_language",
+            "technique": "test_technique",
+            "title": "test_title",
+            "description": "test_description",
+            "user_id": 1,
+            "difficulty": 1,
+            "is_done": false,
+            "limit_at": "2024/11/1"
+        },
+        {
+            "id": 2,
+            "language": "test_language2",
+            "technique": "test_technique2",
+            "title": "test_title2",
+            "description": "test_description2",
+            "user_id": 1,
+            "difficulty": 2,
+            "is_done": false,
+            "limit_at": "2024/11/1"
+        }
+    ]
 }
 ```

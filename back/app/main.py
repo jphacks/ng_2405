@@ -1,19 +1,34 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 import jwt
 from typing import Set
 from database import engine, Base, SessionLocal
-from models import User
-from schemas import UserCreate, LoginUser, TokenData
+from models import User, Task
+from schemas import UserCreate, LoginUser, TokenData, AddTask
 from utils import hash_password, authenticate_user, create_access_token, SECRET_KEY, ALGORITHM
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 app = FastAPI()
 
+origins = [
+    "http://localhost:3000",
+    "http://localhost:8000",
+    "http://localhost:3306"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 Base.metadata.create_all(bind=engine)
 
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = 300
 
 blacklisted_tokens: Set[str] = set()
 
@@ -93,3 +108,27 @@ def logout(token: str = Depends(oauth2_scheme), current_user: User = Depends(get
     # トークンをブラックリストに追加
     blacklisted_tokens.add(token)
     return {"message": "Successfully logged out"}
+
+@app.post("/task")
+def add_task(task: AddTask, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    now_date = datetime.now()
+    new_task = Task(language=task.language, technique=task.technique, title=task.title, description=task.description, user_id=current_user.id, difficulty=task.difficulty, is_done=False, limit_at=now_date + timedelta(weeks=1))
+
+    db.add(new_task)
+    db.commit()
+    db.refresh(new_task)
+
+    return {"message": "Task created successfully"}
+
+@app.get("/tasks")
+def get_all_tasks(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    tasks = db.query(Task).filter(Task.user_id == current_user.id).all()
+    task_list = []
+    for task in tasks:
+        task_dict = task.to_dict()
+        limit: datetime = task_dict['limit_at']
+        task_dict['limit_at'] = '%s/%s/%s' % (limit.year, limit.month, limit.day)
+        task_list.append(task_dict)
+    
+    result = {'tasks': task_list}
+    return result

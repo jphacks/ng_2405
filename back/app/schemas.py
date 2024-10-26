@@ -11,3 +11,10 @@ class LoginUser(BaseModel):
 
 class TokenData(BaseModel):
     username: Optional[str] = None
+
+class AddTask(BaseModel):
+    language: str
+    technique: str
+    title: str
+    description: str
+    difficulty: int
