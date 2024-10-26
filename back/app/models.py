@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, CheckConstraint
+from sqlalchemy.orm import relationship
 from database import Base
 
 class User(Base):
@@ -7,7 +8,6 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(50), unique=True, index=True)
     hashed_password = Column(String(100))
-
 
 class Task(Base):
     __tablename__ = "tasks"
@@ -21,6 +21,7 @@ class Task(Base):
     difficulty = Column(Integer, CheckConstraint("difficulty in (1, 2, 3)"))  # Check制約（1, 2, 3のいずれか）   
     is_done = Column(Boolean, default=False)
     limit_at = Column(DateTime)
+
 
     def to_dict(self):
         return {'id': self.id,
