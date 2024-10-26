@@ -10,7 +10,7 @@ import {
   Chip,
 } from "@mui/material";
 
-import { SECONDARY_COLOR } from "@/constants/color";
+import { PRIMARY_COLOR, SECONDARY_COLOR, TERTIARY_COLOR } from "@/constants/color";
 import type { Task } from "@/types/task";
 
 type Props = {
@@ -19,7 +19,11 @@ type Props = {
 
 const TaskCard = ({ task }: Props) => {
   return (
-    <Card sx={{ boxShadow: "10px 5px 5px lightGray" }}>
+    <Card sx={{
+      boxShadow: "10px 5px 5px lightGray",
+      // border
+      backgroundColor: "whitesmoke"
+    }}>
       <CardContent>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="h5" component="div" sx={{ padding: "4px" }}>
