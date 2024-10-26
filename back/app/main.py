@@ -211,7 +211,7 @@ def edit_task(task_id: int, task: TaskData, current_user: User = Depends(get_cur
     
     return {"message": "Task edited successfully"}
 
-@app.get("/gemini")
+@app.post("/gemini")
 def get_task_from_Gemini(task_componnent: TaskComponent, current_user: User = Depends(get_current_user)):
     prompt = f'''{task_componnent.language}で{task_componnent.technique}だけを使ったタスクの例を３段階の難易度で１つずつJson形式で提案してください．
     keyには以下の項目を含んでください．
