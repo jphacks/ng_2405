@@ -11,6 +11,8 @@ import {
   Typography,
   TextField,
 } from "@mui/material";
+import { PRIMARY_COLOR, BUTTON_COLOR } from "@/constants/color";
+import Link from "next/link";  // Next.jsのLinkコンポーネントをインポート
 
 type FormValues = {
   username: string;
@@ -139,14 +141,22 @@ const Page = () => {
             variant="contained"
             sx={{
               width: "80%",
+              backgroundColor: BUTTON_COLOR,
             }}
             type="submit"
           >
             ログイン
           </Button>
+          {/* サインアップへのリンク */}
+          <Typography variant="body2" sx={{ marginTop: 2 }}>
+            アカウントをお持ちでない方は{" "}
+            <Link href="/sign_up" style={{ color: PRIMARY_COLOR }}>
+              サインアップ
+            </Link>
+          </Typography>
         </Box>
       </Box>
-    </Container>
+    </Container >
   );
 };
 
