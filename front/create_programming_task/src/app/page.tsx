@@ -13,7 +13,7 @@ import {
   Input,
   TextField,
   OutlinedInput,
-  Button
+  Button,
 } from "@mui/material";
 import { PRIMARY_COLOR } from "@/constants/color";
 
@@ -49,8 +49,8 @@ const languages = [
   "Scheme",
   "Swift",
   "TypeScript",
-  "VB"
-]
+  "VB",
+];
 
 type FormValues = {
   language: string;
@@ -58,15 +58,15 @@ type FormValues = {
 };
 
 export default function Home() {
-  const [language, setLanguage] = React.useState('');
+  const [language, setLanguage] = React.useState("");
 
   const handleChange = (event: SelectChangeEvent) => {
     setLanguage(event.target.value);
   };
 
-  const menuItems = languages.map(language =>
+  const menuItems = languages.map((language) => (
     <MenuItem value={language}>{language}</MenuItem>
-  );
+  ));
 
   return (
     <Container>
@@ -88,7 +88,7 @@ export default function Home() {
           required
           sx={{
             m: 1,
-            width: "50%"
+            width: "50%",
           }}
         >
           <InputLabel id="select-language-label">学習言語</InputLabel>
@@ -98,7 +98,7 @@ export default function Home() {
             value={language}
             label="Age *"
             onChange={handleChange}
-            >
+          >
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
@@ -112,7 +112,7 @@ export default function Home() {
           label="学習内容"
           defaultValue=""
           sx={{
-            width: "50%"
+            width: "50%",
           }}
           multiline
           rows={3}
@@ -123,10 +123,10 @@ export default function Home() {
           sx={{
             width: "50%",
             backgroundColor: PRIMARY_COLOR,
-            m: 1
+            m: 1,
           }}
           type="submit"
-          >
+        >
           タスク作成
         </Button>
       </Box>
