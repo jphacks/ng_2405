@@ -1,27 +1,112 @@
+"use client";
+
 import React from "react";
-import Link from "next/link";
+import {
+  SelectChangeEvent,
+  Container,
+  Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormHelperText,
+  Button
+} from "@mui/material";
+
+// プログラミング言語のリスト
+const languages = [
+  "Bash",
+  "C",
+  "C#",
+  "C++",
+  "Clojure",
+  "Cobol",
+  "CoffeeScript",
+  "D",
+  "Elixir",
+  "Erlang",
+  "F#",
+  "Go",
+  "Haskell",
+  "Java",
+  "JavaScript",
+  "Kotlin",
+  "MySQL",
+  "Nadesiko",
+  "Objective-C",
+  "Perl",
+  "PHP",
+  "Python2",
+  "Python3",
+  "R",
+  "Ruby",
+  "Rust",
+  "Scala",
+  "Scheme",
+  "Swift",
+  "TypeScript",
+  "VB"
+]
+
+type FormValues = {
+  language: string;
+  // technique: string;
+};
 
 export default function Home() {
+  const [language, setLanguage] = React.useState('');
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setLanguage(event.target.value);
+  };
+
+  const menuItems = languages.map(language =>
+    <MenuItem value={language}>{language}</MenuItem>
+  );
+
   return (
-    <div>
-      <h1>Top</h1>
-      {/* 確認用のリンク */}
-      {/* 後で削除予定 */}
-      <Link href="/log_in">
-        <p>log in</p>
-      </Link>
-      <Link href="/sign_up">
-        <p>sign up</p>
-      </Link>
-      <Link href="/tasks">
-        <p>tasks</p>
-      </Link>
-      <Link href="/task/1">
-        <p>Task 1</p>
-      </Link>
-      <Link href="/task/2">
-        <p>Task 2</p>
-      </Link>
-    </div>
+    <Container>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        component="form"
+        noValidate
+        // 後でやる
+        // onSubmit={handleSubmit(onSubmit)}
+      >
+        {/* 学習したプログラミング言語の選択欄 */}
+        <FormControl required sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="select-language-label">学習言語</InputLabel>
+          <Select
+            labelId="select-language-label"
+            id="select-language"
+            value={language}
+            label="Age *"
+            onChange={handleChange}
+            >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {menuItems}
+          </Select>
+          <FormHelperText>*必須</FormHelperText>
+        </FormControl>
+        {/* ここに学習内容の入力欄を挿入する */}
+        <Button
+          variant="contained"
+          sx={{
+            width: "10%",
+          }}
+          type="submit"
+          >
+          タスク作成
+        </Button>
+      </Box>
+    </Container>
   );
 }
