@@ -5,7 +5,12 @@ import HeaderLink from "./headerLink";
 
 const Header: React.FC = () => {
   return (
-    <AppBar position="static">
+    <AppBar
+      position="static"
+      sx={{
+        backgroundColor: "#a2c1d0",
+      }}
+    >
       <Box
         sx={{
           display: "flex",
@@ -15,7 +20,9 @@ const Header: React.FC = () => {
         }}
       >
         {/* TODO テキストの内容は検討 */}
-        <Typography variant="h3">Programming Task Manager</Typography>
+        <Typography variant="h3" sx={{ color: "black" }}>
+          Programming Task Manager
+        </Typography>
         <HeaderLink />
       </Box>
     </AppBar>

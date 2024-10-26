@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { deleteAccessToken, getAccessToken } from "../lib/actions";
+import { deleteAccessToken, getAccessToken } from "../../lib/actions";
 
 import Link from "next/link";
 import { Typography, Box } from "@mui/material";

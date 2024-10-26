@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { setAccessToken } from "../lib/actions";
+import { setAccessToken } from "../../lib/actions";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import {
   Container,
