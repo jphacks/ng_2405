@@ -15,7 +15,7 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import { getAccessToken } from "@/app/lib/actions";
+import { getAccessToken } from "@/lib/actions";
 import type { Task } from "@/types/task";
 import { PRIMARY_COLOR } from "@/constants/color";
 
