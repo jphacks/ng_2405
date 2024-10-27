@@ -70,11 +70,13 @@
 - request bodyに以下のようなJsonでタスク情報を送信する
 ```
 {
-  "language": "test_language",
-  "technique": "test_technique",
-  "title": "test_title",
-  "description": "test_description",
-  "difficulty": 1
+    "title": "リストの要素を順番に出力する",
+    "description": "与えられたリストの要素を順番に出力するプログラムを作成してください。",
+    "difficulty": 1,
+    "example": "[1, 2, 3, 4, 5]",
+    "answer": "1\n2\n3\n4\n5",
+    "language": "python",
+    "technique": "forループ"
 }
 ```
 - headerにはログアウトと同じように以下のkey-valueを追加しておく
@@ -89,6 +91,69 @@
     "message": "Task created successfully"
 }
 ```
+### delete_task(DELETE /task/{task_id})
+- 指定したIDを持つタスクをGETするAPI
+- headerにアクセストークンを追加してリクエストを送信
+```
+{
+  "Authorization": "Bearer [access_token]"
+}
+```
+成功すると以下が返ってくる
+```
+{
+    "message": "Successfully deleted task"
+}
+```
+タスクが存在しない場合は以下が返ってくる。
+```
+{
+    "detail": "Task not found"
+}
+```
+タスクが存在するが、アクセスできない場合は以下が返ってくる。
+```
+{
+    "detail": "You are not authorized to delete this task"
+}
+```
+### get_task(GET /task/{task_id})
+- 指定したIDを持つタスクをGETするAPI
+- headerにアクセストークンを追加してリクエストを送信
+```
+{
+  "Authorization": "Bearer [access_token]"
+}
+```
+- ログインしているユーザがタスクを確認できる場合は以下のようなレスポンスが返ってくる。
+```
+{
+    "id": 17,
+    "language": "test_language",
+    "technique": "test_technique",
+    "title": "test_title",
+    "description": "test_description",
+    "user_id": 3,
+    "difficulty": 1,
+    "example": "[1, 2, 3, 4, 5]",
+    "answer": 15,
+    "is_done": false,
+    "limit_at": "2024/11/2"
+}
+```
+タスクが存在しない場合は以下が返ってくる
+```
+{
+    "detail": "Task not found"
+}
+```
+タスクが存在するが、アクセスできない場合は以下が返ってくる。
+```
+{
+    "detail": "You are not authorized to get detail of this task"
+}
+```
+
 ### get_tasks (GET /tasks)
 - ログインしているユーザーのすべてのタスクをGETするAPI
 - headerにログアウトと同じように以下のkey-valueを追加してリクエストを送信
@@ -107,6 +172,8 @@
             "technique": "test_technique",
             "title": "test_title",
             "description": "test_description",
+            "example": [1, 2, 3, 4, 5],
+            "answer": "15",
             "user_id": 1,
             "difficulty": 1,
             "is_done": false,
@@ -118,6 +185,8 @@
             "technique": "test_technique2",
             "title": "test_title2",
             "description": "test_description2",
+            "example": "[1, 2, 3, 4, 5]",
+            "answer": "15",
             "user_id": 1,
             "difficulty": 2,
             "is_done": false,
@@ -126,5 +195,114 @@
     ]
 }
 ```
+### do_task (PATCH /done_task/{task_id})
+- taskの達成フラグをtrueにする
+- headerにアクセストークンを追加してリクエストを送信
+```
+{
+  "Authorization": "Bearer [access_token]"
+}
+```
+- 成功すると以下が返ってくる。
+{
+    "message": "Task completed successfully"
+}
+タスクが存在しない場合は以下が返ってくる
+```
+{
+    "detail": "Task not found"
+}
+```
+タスクが存在するが、アクセスできない場合は以下が返ってくる。
+```
+{
+    "detail": "You are not authorized to complete this task"
+}
+```
+### edit_task (PATCH /task/id)
+- taskの情報を編集する
+- headerにアクセストークンを追加してリクエストを送信
+```
+{
+  "Authorization": "Bearer [access_token]"
+}
+```
+- bodyにtaskの情報を全て含める
+```
+{
+    "language": "test_language",
+    "technique": "test_technique",
+    "title": "test_title",
+    "description": "test_description",
+    "example": "[1, 2, 3, 4, 6]",
+    "answer": "16",
+    "difficulty": 2
+}
+```
+成功すると、以下が返ってくる。
+```
+{
+    "message": "Task edited successfully"
+}
+```
+taskが存在しない場合は以下が返ってくる。
+```
+{
+    "detail": "Task not found"
+}
+```
+taskにアクセスできない場合は以下が返ってくる。
+```
+{
+    "detail": "You are not authorized to edit this task"
+}
+```
 ### get_gemini (GET /gemini)
 - 言語とテクニックに応じてGeminiにタスク例を考えさせる
+- request bodyに以下のようにしてlanguageとtechniqueを送信する
+```
+{
+    "language": "python",
+    "technique": "forループ"
+}
+```
+- headerにログアウトと同じように以下のkey-valueを追加してリクエストを送信
+```
+{
+  "Authorization": "Bearer [access_token]"
+}
+```
+- Geminiから正常に返ってくると以下のようなJsonが返ってくる
+```
+{
+    "tasks": [
+        {
+            "title": "偶数の合計",
+            "description": "1から10までの偶数の合計を計算してください。",
+            "difficulty": 1,
+            "example": "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+            "answer": "55"
+            "language": "python",
+            "technique": "forループ"
+        },
+        {
+            "title": "リストの最大値",
+            "description": "与えられたリストから最大値を見つけてください。\nリスト: [5, 2, 8, 1, 9]",
+            "difficulty": 2,
+            "example": "[5, 2, 8, 1, 9]",
+            "answer": "9",
+            "language": "python",
+            "technique": "forループ"
+        },
+        {
+            "title": "フィボナッチ数列",
+            "description": "与えられた数nまでのフィボナッチ数列を生成してください。\n例: n=5\n出力: [0, 1, 1, 2, 3]",
+            "difficulty": 3,
+            "example": "5",
+            "answer": "[0, 1, 1, 2, 3]"
+            "language": "python",
+            "technique": "forループ"
+        }
+    ]
+}
+```
