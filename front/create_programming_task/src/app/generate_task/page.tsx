@@ -258,10 +258,6 @@ const Page: React.FC = () => {
               >
                 おすすめタスク
               </Typography>
-              {/* タスクを生成したときの条件 */}
-              {initialLanguage && (
-                <Chip label={initialLanguage} sx={{ marginLeft: "10px" }} />
-              )}
               {/* Geminiからの出力 */}
               <Grid2
                 container
