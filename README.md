@@ -1,6 +1,6 @@
-HackDrill
+# HackDrill
 
-[![IMAGE ALT TEXT HERE](https://jphacks.com/wp-content/uploads/2024/07/JPHACKS2024_ogp.jpg)](https://www.youtube.com/watch?v=DZXUkEj-CSI)
+[![IMAGE ALT TEXT HERE](https://github.com/jphacks/ng_2405/blob/main/front/create_programming_task/src/app/public/Logo.png)](https://youtu.be/uccM-JB9iPM)
 
 ## 製品概要
 
