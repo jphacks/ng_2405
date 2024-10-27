@@ -15,6 +15,7 @@ import {
   MenuItem,
   TextField,
   Button,
+  CircularProgress,
   Chip,
 } from "@mui/material";
 import TaskCard from "../_components/taskCard";
@@ -51,6 +52,7 @@ const Page: React.FC = () => {
   const handleChange = (event: SelectChangeEvent) => {
     setLanguage(event.target.value as Language);
   };
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchAiTasks = async (language: Language, technique: string) => {
@@ -93,6 +95,7 @@ const Page: React.FC = () => {
   ));
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    setIsLoading(true);
     console.log(data);
     // ここでgeminiのAPIを叩く
     // http://localhost:8000/gemini (method: POST)
@@ -116,6 +119,7 @@ const Page: React.FC = () => {
       console.error("error");
       console.log(JSON.stringify(responseJson));
     }
+    setIsLoading(false);
   };
 
   const fetchAccessToken = async () => {
@@ -168,7 +172,7 @@ const Page: React.FC = () => {
               <Controller
                 name="language"
                 control={control}
-                defaultValue={language}
+                defaultValue={initialLanguage || language}
                 render={({ field }) => (
                   <>
                     <InputLabel id="select-language-label">学習言語</InputLabel>
@@ -188,13 +192,19 @@ const Page: React.FC = () => {
               <Controller
                 name="technique"
                 control={control}
+                defaultValue={
+                  initialTechnique !== undefined
+                    ? initialTechnique
+                      ? initialTechnique
+                      : ""
+                    : ""
+                }
                 render={({ field }) => (
                   <TextField
                     {...field}
                     required
                     id="outlined-required"
                     label="学習内容"
-                    defaultValue=""
                     sx={{
                       width: "80%",
                     }}
@@ -216,96 +226,60 @@ const Page: React.FC = () => {
             >
               タスク作成
             </Button>
-            {/* // <Box
-                        // key={task.title}
-                        // sx={{
-                        //   display: "flex",
-                        //   flexDirection: "column",
-                        //   alignItems: "center",
-                        //   justifyContent: "center",
-                        // }}
-                        // >
-                        //   <Typography>
-                        //     {task.difficulty}
-                        //   </Typography>
-                        //   <Typography
-                        //     sx={{
-                        //       m: 1,
-                        //     }}
-                        //     variant="h5"
-                        //     gutterBottom
-                        //   >
-                        //     {task.title}
-                        //   </Typography>
-                        //   <Typography
-                        //     sx={{
-                        //       m: 1,
-                        //     }}
-                        //     variant="body1"
-                        //     gutterBottom
-                        //     >
-                        //     {task.description}
-                        //   </Typography>
-                        //   <Typography
-                        //     sx={{
-                            //       m: 1,
-                            //     }}
-                            //     variant="body1"
-                            //     gutterBottom
-                            //     >
-                            //     {task.example}
-                            //   </Typography>
-                            //   <Typography
-                            //     sx={{
-                            //       m: 1,
-                            //     }}
-                            //     variant="body1"
-                            //     gutterBottom
-                            //     >
-                            //     {task.answer}
-                            //   </Typography>
-                            // </Box> */}
           </Box>
           {/* 画面右側 */}
-          <Box
-            sx={{
-              width: "120%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              // justifyContent: "center",
-            }}
-            component="form"
-          >
-            <Typography
+          {isLoading ? (
+            <Box
               sx={{
-                m: 2,
+                width: "120%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
               }}
-              variant="h4"
-              gutterBottom
             >
-              おすすめタスク
-            </Typography>
-            {/* タスクを生成したときの条件 */}
-            <Chip label={initialLanguage} sx={{ marginLeft: "10px" }} />
-
-            {/* Geminiからの出力 */}
-            <Grid2
-              container
-              spacing={2}
-              columns={{ xs: 4, sm: 8, md: 12 }}
-              sx={{ marginTop: "20px", padding: "0 5%" }}
+              <CircularProgress sx={{ margin: "0 auto", marginTop: "50px" }} />
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                width: "120%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+              component="form"
             >
-              {aiTasks.length > 0 &&
-                aiTasks.map((task: AiTask) => {
-                  return (
-                    <Grid2 key={task.title} size={{ xs: 4, sm: 8, md: 12 }}>
-                      <AiTaskCard task={task} />
-                    </Grid2>
-                  );
-                })}
-            </Grid2>
-          </Box>
+              <Typography
+                sx={{
+                  m: 2,
+                }}
+                variant="h4"
+                gutterBottom
+              >
+                おすすめタスク
+              </Typography>
+              {/* タスクを生成したときの条件 */}
+              {initialLanguage && (
+                <Chip label={initialLanguage} sx={{ marginLeft: "10px" }} />
+              )}
+              {/* Geminiからの出力 */}
+              <Grid2
+                container
+                spacing={2}
+                columns={{ xs: 4, sm: 8, md: 12 }}
+                sx={{ marginTop: "20px", padding: "0 5%" }}
+              >
+                {aiTasks.length > 0 &&
+                  aiTasks.map((task: AiTask) => {
+                    return (
+                      <Grid2 key={task.title} size={{ xs: 4, sm: 8, md: 12 }}>
+                        <AiTaskCard task={task} />
+                      </Grid2>
+                    );
+                  })}
+              </Grid2>
+            </Box>
+          )}
         </Box>
       </Container>
     </>
