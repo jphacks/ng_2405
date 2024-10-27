@@ -1,6 +1,8 @@
+import { Language } from "@/types/language";
+
 export type Task = {
   id: string;
-  language: string;
+  language: Language;
   technique: string;
   title: string;
   description: string;

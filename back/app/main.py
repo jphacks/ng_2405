@@ -214,6 +214,7 @@ def edit_task(task_id: int, task: TaskData, current_user: User = Depends(get_cur
 @app.post("/gemini")
 def get_task_from_Gemini(task_componnent: TaskComponent, current_user: User = Depends(get_current_user)):
     prompt = f'''{task_componnent.language}で{task_componnent.technique}だけを使ったタスクの例を３段階の難易度で１つずつJson形式で提案してください．
+    タスクは初学者に解かせるので難しくしすぎないでください．
     keyには以下の項目を含んでください．
     - "title"
     - "description"
@@ -227,11 +228,18 @@ def get_task_from_Gemini(task_componnent: TaskComponent, current_user: User = De
     難易度は1が一番易しく，2が中間，3が一番難しいです．
     "example"にはタスクの具体的な入力例をvalueに入れてください
     "answer"には"example"の結果をvalueに入れてください'''
+    i = 0
     while True:
-        response = model.generate_content(prompt)
+        i += 1
+        response = model.generate_content(prompt, 
+                                          generation_config=genai.types.GenerationConfig(
+                                              temperature=0
+                                          ))
         response_json = validate_Gemini_response(response.text)
         if response_json != False:
             break
+        if i >= 5:
+            raise HTTPException(status_code=402, detail="Failed to get response from gemini")
         time.sleep(1)
     
     for i in range(3):
