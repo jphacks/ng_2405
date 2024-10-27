@@ -112,7 +112,7 @@ export default function Home() {
               type="submit"
               href="/log_in"
             >
-              ログイン
+              ログインページへ
             </Button>
         </div>
       </Box>
