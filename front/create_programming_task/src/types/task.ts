@@ -10,4 +10,6 @@ export type Task = {
   difficulty: 1 | 2 | 3;
   is_done: boolean;
   limit_at: Date;
+  example: string;
+  answer: string;
 };
