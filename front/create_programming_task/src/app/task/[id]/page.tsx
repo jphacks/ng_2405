@@ -27,21 +27,10 @@ type Props = {
   };
 };
 
-// ダミーデータ
-const dummyTask = {
-  id: "1",
-  language: "Python",
-  technique: "for-loop",
-  title: "sum1to10",
-  description: "What's the sum of 1 to 10?",
-  user_id: "3",
-  difficulty: 2,
-};
-
 const Page = ({ params }: Props) => {
   const [task, setTask] = useState<Task>({
     id: "",
-    language: "",
+    language: "Python3",
     technique: "",
     title: "",
     description: "",
