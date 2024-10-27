@@ -61,4 +61,4 @@
 * 独自で開発したものの内容をこちらに記載してください
    - 言語と技術を指定するとGeminiから難易度ごとにタスクの例が送られてくる仕組み
 * 特に力を入れた部分をファイルリンク、またはcommit_idを記載してください。
-   - [このファイルのget_task_from_gemini](https://github.com/jphacks/ng_2405/blob/main/back/app/main.py)
+   - [このファイルのget_task_from_Gemini](https://github.com/jphacks/ng_2405/blob/main/back/app/main.py)
