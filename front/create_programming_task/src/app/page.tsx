@@ -19,6 +19,9 @@ import TaskCard from "./_components/taskCard";
 
 import type { Task } from "@/types/task";
 import { PRIMARY_COLOR } from "@/constants/color";
+import Image from 'next/image';
+import Link from "next/link";
+import LogoImage from "./public/Logo.png"
 
 // プログラミング言語のリスト
 const languages = [
@@ -113,112 +116,17 @@ export default function Home() {
 
   return (
     <Container>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          verticalAlign: "top"
-          // justifyContent: "center",
-        }}
-      >
-        {/* 画面左側 */}
-        <Box
-          sx={{
-            width: "50%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          component="form"
-        >
-          {/* 最近のタスクを表示 */}
-          <Typography
-            sx={{
-              m: 1
-            }}
-            variant="h4"
-            gutterBottom
-          >
-            最近のタスク
-          </Typography>
-          <Grid2
-            container
-            spacing={2}
-            columns={{ xs: 4, sm: 8, md: 12 }}
-            sx={{ marginTop: "20px", padding: "0 5%" }}
-          >
-            {tasks.slice(-display_task_num).reverse().map((task: Task) => {
-              return (
-                <Grid2 key={task.id} size={{ xs: 4, sm: 8, md: 12 }}>
-                  <TaskCard task={task} />
-                </Grid2>
-              );
-            })}
-          </Grid2>
-        </Box>
-        {/* 画面右側 */}
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            // justifyContent: "center",
-          }}
-          component="form"
-          noValidate
-          // 後でやる
-          // onSubmit={handleSubmit(onSubmit)}
-        >
-          {/* 学習したプログラミング言語の選択欄 */}
-          <FormControl
-            required
-            sx={{
-              m: 1,
-              width: "80%"
-            }}
-          >
-            <InputLabel id="select-language-label">学習言語</InputLabel>
-            <Select
-              labelId="select-language-label"
-              id="select-language"
-              value={language}
-              label="Age *"
-              onChange={handleChange}
-              >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              {menuItems}
-            </Select>
-          </FormControl>
-          {/* 学習内容の入力欄 */}
-          <TextField
-            required
-            id="outlined-required"
-            label="学習内容"
-            defaultValue=""
-            sx={{
-              width: "80%"
-            }}
-            multiline
-            rows={3}
-          />
-          {/* タスク作成ボタン */}
-          <Button
-            variant="contained"
-            sx={{
-              width: "80%",
-              backgroundColor: PRIMARY_COLOR,
-              m: 1
-            }}
-            type="submit"
-            >
-            タスク作成
-          </Button>
-        </Box>
+      <Box sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+      }}>
+        <Image src={LogoImage} alt='Logo' width={500} height={500} />
+        <div id="descript_appli">このサイトではあなたに合わせた問題を作成することができます．
+        </div>
+        <Link href='/log_in'>サービスへはこちらから</Link>
       </Box>
     </Container>
   );

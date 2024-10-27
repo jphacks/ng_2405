@@ -15,6 +15,7 @@ import LanguageSelect from "./_components/languageSelect";
 
 import type { Language } from "@/types/language";
 import type { Task } from "@/types/task";
+import Header from "../_components/header";
 
 const dummyTasks: Task[] = [
   {
@@ -110,6 +111,8 @@ const Page: React.FC = () => {
 
   return (
     <>
+    <Header />
+    <>
       <LanguageSelect
         languages={languages}
         selectedLanguage={selectedLanguage}
@@ -137,6 +140,7 @@ const Page: React.FC = () => {
         })}
       </Grid2>
     </>
+  </>
   );
 };
 

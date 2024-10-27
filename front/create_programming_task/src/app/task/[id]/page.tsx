@@ -18,6 +18,7 @@ import {
 import { getAccessToken } from "@/app/lib/actions";
 import type { Task } from "@/types/task";
 import { PRIMARY_COLOR } from "@/constants/color";
+import Header from "../../_components/header";
 
 type Props = {
   params: {
@@ -159,6 +160,8 @@ const Page = ({ params }: Props) => {
   };
 
   return (
+    <>
+    <Header />
     <Container>
       {task.id !== "" && (
         <>
@@ -230,6 +233,7 @@ const Page = ({ params }: Props) => {
         </>
       )}
     </Container>
+    </>
   );
 };
 
