@@ -53,6 +53,28 @@ export default function Home() {
     </MenuItem>
   ));
 
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const accessToken = await fetchAccessToken();
+      const response = await fetch("http://localhost:8000/tasks", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const responseJson = await response.json();
+      if (response.ok) {
+        console.log(`response: ${JSON.stringify(responseJson)}`);
+        setTasks(responseJson.tasks);
+      } else {
+        console.error("error");
+        console.log(JSON.stringify(responseJson));
+      }
+    };
+    fetchTasks();
+  }, []);
+
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     console.log(data);
     // ここでgeminiのAPIを叩く
