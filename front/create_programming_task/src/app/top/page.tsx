@@ -14,8 +14,8 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import TaskCard from "./_components/taskCard";
-import AiTaskCard from "./_components/aiTaskCard";
+import TaskCard from "../_components/taskCard";
+import AiTaskCard from "../_components/aiTaskCard";
 
 import type { Task } from "@/types/task";
 import type { AiTask } from "@/types/aitask";
