@@ -55,7 +55,7 @@ const AiTaskCard = ({ task }: Props) => {
       }),
     });
     if (response.ok) {
-      console.log("タスクの追加に成功しました。");
+      alert("タスクの追加に成功しました。");
     }
   };
 
