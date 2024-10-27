@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import {
     SelectChangeEvent,
     Container,
@@ -32,7 +33,10 @@ type FormValues = {
 };
 
 
-export default function Home() {
+const Page: React.FC = () => {
+    const searchParams = useSearchParams();
+    const initialLanguage = searchParams.get("language");
+    const initialTechnique = searchParams.get("technique");
     // タスク表示用
     // TODO ここはAPIから取得するように変更する
     const [tasks, setTasks] = useState<Task[]>(mockTasks);
@@ -261,26 +265,10 @@ return (
                         );
                     })}
                 </Grid2>
-                {/* 生成されたタスクを表示 */}
-                <Grid2
-                    container
-                    spacing={2}
-                    columns={{ xs: 4, sm: 8, md: 12 }}
-                    sx={{ marginTop: "20px", padding: "0 5%" }}
-                >
-                    {tasks
-                    .slice(-displayTaskNum)
-                    .reverse()
-                    .map((task: Task) => {
-                        return (
-                        <Grid2 key={task.id} size={{ xs: 4, sm: 8, md: 12 }}>
-                            <TaskCard task={task} />
-                        </Grid2>
-                        );
-                    })}
-                </Grid2>
             </Box>
         </Box>
     </Container>
     );
 }
+
+export default Page;

@@ -31,7 +31,6 @@ type FormValues = {
   technique: string;
 };
 
-
 export default function Home() {
   // タスク表示用
   // TODO ここはAPIから取得するように変更する
@@ -57,26 +56,31 @@ export default function Home() {
     console.log(data);
     // ここでgeminiのAPIを叩く
     // http://localhost:8000/gemini (method: POST)
-    const accessToken = await fetchAccessToken();
 
-    const response = await fetch("http://localhost:8000/gemini", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(data),
-    });
+    // ここでページ遷移を行う
+    const query = new URLSearchParams(data);
+    window.location.href = `/generate_task?${query.toString()}`;
 
-    const responseJson = await response.json();
-    if (response.ok) {
-      console.log(`response: ${JSON.stringify(responseJson)}`);
-      // レスポンスを元にAIタスクを作成
-      setAiTasks(responseJson.tasks);
-    } else {
-      console.error("error");
-      console.log(JSON.stringify(responseJson));
-    }
+    // const accessToken = await fetchAccessToken();
+
+    // const response = await fetch("http://localhost:8000/gemini", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${accessToken}`,
+    //   },
+    //   body: JSON.stringify(data),
+    // });
+
+    // const responseJson = await response.json();
+    // if (response.ok) {
+    //   console.log(`response: ${JSON.stringify(responseJson)}`);
+    //   // レスポンスを元にAIタスクを作成
+    //   setAiTasks(responseJson.tasks);
+    // } else {
+    //   console.error("error");
+    //   console.log(JSON.stringify(responseJson));
+    // }
   };
 
   const fetchAccessToken = async () => {
@@ -183,16 +187,16 @@ export default function Home() {
             columns={{ xs: 4, sm: 8, md: 12 }}
             sx={{ marginTop: "20px", padding: "0 5%" }}
           >
-          {aiTasks.length > 0 &&
-            aiTasks.map((task: AiTask) => {
-              return (
-                <Grid2 key={task.title} size={{ xs: 4, sm: 8, md: 12 }}>
-                  <AiTaskCard task={task} />
-                </Grid2>
-              );
-            })}
+            {aiTasks.length > 0 &&
+              aiTasks.map((task: AiTask) => {
+                return (
+                  <Grid2 key={task.title} size={{ xs: 4, sm: 8, md: 12 }}>
+                    <AiTaskCard task={task} />
+                  </Grid2>
+                );
+              })}
           </Grid2>
-                {/* // <Box
+          {/* // <Box
                 // key={task.title}
                 // sx={{
                 //   display: "flex",
