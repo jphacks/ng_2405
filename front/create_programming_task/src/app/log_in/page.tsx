@@ -12,7 +12,7 @@ import {
   TextField,
 } from "@mui/material";
 import { PRIMARY_COLOR, BUTTON_COLOR } from "@/constants/color";
-import Link from "next/link";  // Next.jsのLinkコンポーネントをインポート
+import Link from "next/link"; // Next.jsのLinkコンポーネントをインポート
 import Header from "../_components/header";
 
 type FormValues = {
@@ -60,7 +60,7 @@ const Page = () => {
         // cookieにaccess_tokenを保存
         console.log(`access_token: ${responseJson.access_token}`);
         await setAccessToken(responseJson.access_token);
-        window.location.href = "/";
+        window.location.href = "/top";
       } else {
         // ログイン失敗時の処理
         alert("ログインに失敗しました。");
@@ -72,7 +72,7 @@ const Page = () => {
 
   return (
     <>
-    <Header />
+      <Header />
       <Container>
         <Box
           sx={{
@@ -159,7 +159,7 @@ const Page = () => {
             </Typography>
           </Box>
         </Box>
-      </Container >
+      </Container>
     </>
   );
 };

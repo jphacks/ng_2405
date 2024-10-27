@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Header from "../_components/header";
 import {
   SelectChangeEvent,
   Container,
@@ -89,114 +90,99 @@ export default function Home() {
   };
 
   return (
-    <Container>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          // alignItems: "center",
-          verticalAlign: "top",
-          // justifyContent: "center",
-        }}
-      >
-        {/* 画面右側 */}
+    <>
+      <Header />
+      <Container>
         <Box
           sx={{
-            width: "80%",
             display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            flexDirection: "row",
+            // alignItems: "center",
+            verticalAlign: "top",
             // justifyContent: "center",
           }}
-          component="form"
-          noValidate
-          // 後でやる
-          onSubmit={handleSubmit(onSubmit)}
         >
-          <Typography
+          {/* 画面左側 */}
+          <Box
             sx={{
-              m: 2,
-            }}
-            variant="h4"
-            gutterBottom
-          >
-            AIタスク
-          </Typography>
-          {/* 学習したプログラミング言語の選択欄 */}
-          <FormControl
-            sx={{
-              m: 2,
               width: "80%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              // justifyContent: "center",
             }}
+            component="form"
+            noValidate
+            onSubmit={handleSubmit(onSubmit)}
           >
-            <Controller
-              name="language"
-              control={control}
-              defaultValue={language}
-              render={({ field }) => (
-                <>
-                  <InputLabel id="select-language-label">学習言語</InputLabel>
-                  <Select
+            <Typography
+              sx={{
+                m: 2,
+              }}
+              variant="h4"
+              gutterBottom
+            >
+              タスク作成
+            </Typography>
+            {/* 学習したプログラミング言語の選択欄 */}
+            <FormControl
+              sx={{
+                m: 2,
+                width: "80%",
+              }}
+            >
+              <Controller
+                name="language"
+                control={control}
+                defaultValue={language}
+                render={({ field }) => (
+                  <>
+                    <InputLabel id="select-language-label">学習言語</InputLabel>
+                    <Select
+                      {...field}
+                      labelId="select-language-label"
+                      id="select-language"
+                    >
+                      {menuItems}
+                    </Select>
+                  </>
+                )}
+              />
+            </FormControl>
+            {/* 学習内容の入力欄 */}
+            <FormControl sx={{ m: 1, width: "80%" }}>
+              <Controller
+                name="technique"
+                control={control}
+                render={({ field }) => (
+                  <TextField
                     {...field}
-                    labelId="select-language-label"
-                    id="select-language"
-                  >
-                    {menuItems}
-                  </Select>
-                </>
-              )}
-            />
-          </FormControl>
-          {/* 学習内容の入力欄 */}
-          <FormControl sx={{ m: 1, width: "80%" }}>
-            <Controller
-              name="technique"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  required
-                  id="outlined-required"
-                  label="学習内容"
-                  defaultValue=""
-                  sx={{
-                    width: "80%",
-                  }}
-                  multiline
-                  rows={3}
-                />
-              )}
-            />
-          </FormControl>
-          {/* タスク作成ボタン */}
-          <Button
-            variant="contained"
-            sx={{
-              width: "80%",
-              backgroundColor: BUTTON_COLOR,
-              m: 1,
-            }}
-            type="submit"
-          >
-            タスク作成
-          </Button>
-          {/* Geminiからの出力 */}
-          <Grid2
-            container
-            spacing={2}
-            columns={{ xs: 4, sm: 8, md: 12 }}
-            sx={{ marginTop: "20px", padding: "0 5%" }}
-          >
-            {aiTasks.length > 0 &&
-              aiTasks.map((task: AiTask) => {
-                return (
-                  <Grid2 key={task.title} size={{ xs: 4, sm: 8, md: 12 }}>
-                    <AiTaskCard task={task} />
-                  </Grid2>
-                );
-              })}
-          </Grid2>
-          {/* // <Box
+                    required
+                    id="outlined-required"
+                    label="学習内容"
+                    defaultValue=""
+                    sx={{
+                      width: "80%",
+                    }}
+                    multiline
+                    rows={3}
+                  />
+                )}
+              />
+            </FormControl>
+            {/* タスク作成ボタン */}
+            <Button
+              variant="contained"
+              sx={{
+                width: "80%",
+                backgroundColor: BUTTON_COLOR,
+                m: 1,
+              }}
+              type="submit"
+            >
+              タスク作成
+            </Button>
+            {/* // <Box
                 // key={task.title}
                 // sx={{
                 //   display: "flex",
@@ -245,47 +231,48 @@ export default function Home() {
                       //     {task.answer}
                       //   </Typography>
                       // </Box> */}
-        </Box>
-        {/* 画面左側 */}
-        <Box
-          sx={{
-            width: "120%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            // justifyContent: "center",
-          }}
-          component="form"
-        >
-          {/* 最近のタスクを表示 */}
-          <Typography
+          </Box>
+          {/* 画面右側 */}
+          <Box
             sx={{
-              m: 2,
+              width: "120%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              // justifyContent: "center",
             }}
-            variant="h4"
-            gutterBottom
+            component="form"
           >
-            最近のタスク
-          </Typography>
-          <Grid2
-            container
-            spacing={2}
-            columns={{ xs: 4, sm: 8, md: 12 }}
-            sx={{ marginTop: "20px", padding: "0 5%" }}
-          >
-            {tasks
-              .slice(-displayTaskNum)
-              .reverse()
-              .map((task: Task) => {
-                return (
-                  <Grid2 key={task.id} size={{ xs: 4, sm: 8, md: 12 }}>
-                    <TaskCard task={task} />
-                  </Grid2>
-                );
-              })}
-          </Grid2>
+            {/* 最近のタスクを表示 */}
+            <Typography
+              sx={{
+                m: 2,
+              }}
+              variant="h4"
+              gutterBottom
+            >
+              最近のタスク
+            </Typography>
+            <Grid2
+              container
+              spacing={2}
+              columns={{ xs: 4, sm: 8, md: 12 }}
+              sx={{ marginTop: "20px", padding: "0 5%" }}
+            >
+              {tasks
+                .slice(-displayTaskNum)
+                .reverse()
+                .map((task: Task) => {
+                  return (
+                    <Grid2 key={task.id} size={{ xs: 4, sm: 8, md: 12 }}>
+                      <TaskCard task={task} />
+                    </Grid2>
+                  );
+                })}
+            </Grid2>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </>
   );
 }
