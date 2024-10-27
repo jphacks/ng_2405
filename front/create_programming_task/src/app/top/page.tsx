@@ -183,9 +183,6 @@ export default function Home() {
                     id="outlined-required"
                     label="学習内容"
                     defaultValue=""
-                    sx={{
-                      width: "80%",
-                    }}
                     multiline
                     rows={3}
                   />
