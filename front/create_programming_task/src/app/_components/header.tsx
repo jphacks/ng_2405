@@ -3,12 +3,12 @@ import { AppBar, Typography, Box } from "@mui/material";
 import { PRIMARY_COLOR } from "@/constants/color";
 import { FONT } from "@/constants/font";
 
-import Image from 'next/image';
+import Image from "next/image";
 import HeaderLink from "./headerLink";
 import LogoImage from "../public/Logo.png";
 import Link from "next/link";
 
-import '../globals.css';
+import "../globals.css";
 
 const Header: React.FC = () => {
   return (
@@ -25,8 +25,10 @@ const Header: React.FC = () => {
           alignItems: "center",
           padding: "1rem",
         }}
-        >
-        <Image src={LogoImage} alt='Logo' width={50} height={50} />
+      >
+        <Link href="/top">
+          <Image src={LogoImage} alt="Logo" width={50} height={50} />
+        </Link>
         <HeaderLink />
       </Box>
     </AppBar>

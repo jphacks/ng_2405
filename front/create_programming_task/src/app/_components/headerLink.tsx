@@ -6,7 +6,7 @@ import { deleteAccessToken, getAccessToken } from "../../lib/actions";
 import Link from "next/link";
 import { Typography, Box } from "@mui/material";
 import styles from "./headerLink.module.css";
-import '../globals.css';
+import "../globals.css";
 import { TERTIARY_COLOR } from "@/constants/color";
 import { FONT } from "@/constants/font";
 
@@ -56,22 +56,23 @@ const HeaderLink = () => {
         padding: "1rem",
       }}
     >
-      <Link href="/" className={styles.link}>
+      <Link href="/top" className={styles.link}>
         <Typography
           sx={[
             {
-              '&:hover': {
+              "&:hover": {
                 color: TERTIARY_COLOR,
               },
             },
             {
-            color: "white",
-            whiteSpace: "nowrap",
-            fontWeight: "bold",
-            fontSize: "1.5rem",
-            marginRight: "1.5rem",
-            // fontFamily: FONT,
-          }]}
+              color: "white",
+              whiteSpace: "nowrap",
+              fontWeight: "bold",
+              fontSize: "1.5rem",
+              marginRight: "1.5rem",
+              // fontFamily: FONT,
+            },
+          ]}
         >
           トップページ
         </Typography>
@@ -80,18 +81,19 @@ const HeaderLink = () => {
         <Typography
           sx={[
             {
-              '&:hover': {
+              "&:hover": {
                 color: TERTIARY_COLOR,
               },
             },
             {
-            color: "white",
-            whiteSpace: "nowrap",
-            fontWeight: "bold",
-            fontSize: "1.5rem",
-            marginRight: "1.5rem",
-            // fontFamily: FONT,
-          }]}
+              color: "white",
+              whiteSpace: "nowrap",
+              fontWeight: "bold",
+              fontSize: "1.5rem",
+              marginRight: "1.5rem",
+              // fontFamily: FONT,
+            },
+          ]}
         >
           タスク一覧
         </Typography>
@@ -100,18 +102,19 @@ const HeaderLink = () => {
         <Typography
           sx={[
             {
-              '&:hover': {
+              "&:hover": {
                 color: TERTIARY_COLOR,
               },
             },
             {
-            color: "white",
-            whiteSpace: "nowrap",
-            cursor: "pointer",
-            fontWeight: "bold",
-            fontSize: "1.5rem",
-            // fontFamily: FONT,
-          }]}
+              color: "white",
+              whiteSpace: "nowrap",
+              cursor: "pointer",
+              fontWeight: "bold",
+              fontSize: "1.5rem",
+              // fontFamily: FONT,
+            },
+          ]}
           onClick={handleLogout}
         >
           ログアウト
@@ -121,17 +124,18 @@ const HeaderLink = () => {
           <Typography
             sx={[
               {
-                '&:hover': {
+                "&:hover": {
                   color: TERTIARY_COLOR,
                 },
               },
               {
-              color: "white",
-              whiteSpace: "nowrap",
-              fontWeight: "bold",
-              fontSize: "1.5rem",
-              // fontFamily: FONT,
-            }]}
+                color: "white",
+                whiteSpace: "nowrap",
+                fontWeight: "bold",
+                fontSize: "1.5rem",
+                // fontFamily: FONT,
+              },
+            ]}
           >
             ログイン
           </Typography>
