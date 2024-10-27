@@ -26,21 +26,10 @@ type Props = {
   };
 };
 
-// ダミーデータ
-const dummyTask = {
-  id: "1",
-  language: "Python",
-  technique: "for-loop",
-  title: "sum1to10",
-  description: "What's the sum of 1 to 10?",
-  user_id: "3",
-  difficulty: 2,
-};
-
 const Page = ({ params }: Props) => {
   const [task, setTask] = useState<Task>({
     id: "",
-    language: "",
+    language: "Python3",
     technique: "",
     title: "",
     description: "",
@@ -161,78 +150,78 @@ const Page = ({ params }: Props) => {
 
   return (
     <>
-    <Header />
-    <Container>
-      {task.id !== "" && (
-        <>
-          <h1>{task.title}</h1>
-          <Chip label={task.language} />
-          <Typography component="legend">難易度</Typography>
-          <Rating
-            name="difficulty"
-            value={task.difficulty ? task.difficulty : 0}
-            max={3}
-            readOnly
-          />
-          {/* とりあえず表形式で表示 */}
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableBody>
-                <TableRow
-                  key={task.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    <Typography style={{ fontWeight: "bold" }}>
-                      学習内容
-                    </Typography>
-                  </TableCell>
-                  <TableCell>{task.technique}</TableCell>
-                </TableRow>
-                <TableRow
-                  key={task.description}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    <Typography style={{ fontWeight: "bold" }}>
-                      タスク内容
-                    </Typography>
-                  </TableCell>
-                  <TableCell>{task.description}</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-          {/* TODO 今の実装は激重 */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-evenly",
-              marginTop: "20px",
-            }}
-          >
-            <Button
-              variant="contained"
-              onClick={() => {
-                handleClick(false);
+      <Header />
+      <Container>
+        {task.id !== "" && (
+          <>
+            <h1>{task.title}</h1>
+            <Chip label={task.language} />
+            <Typography component="legend">難易度</Typography>
+            <Rating
+              name="difficulty"
+              value={task.difficulty ? task.difficulty : 0}
+              max={3}
+              readOnly
+            />
+            {/* とりあえず表形式で表示 */}
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableBody>
+                  <TableRow
+                    key={task.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      <Typography style={{ fontWeight: "bold" }}>
+                        学習内容
+                      </Typography>
+                    </TableCell>
+                    <TableCell>{task.technique}</TableCell>
+                  </TableRow>
+                  <TableRow
+                    key={task.description}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      <Typography style={{ fontWeight: "bold" }}>
+                        タスク内容
+                      </Typography>
+                    </TableCell>
+                    <TableCell>{task.description}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+            {/* TODO 今の実装は激重 */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                marginTop: "20px",
               }}
-              sx={{ backgroundColor: PRIMARY_COLOR }}
             >
-              前へ
-            </Button>
-            <Button
-              variant="contained"
-              onClick={() => {
-                handleClick(true);
-              }}
-              sx={{ backgroundColor: PRIMARY_COLOR }}
-            >
-              次へ
-            </Button>
-          </Box>
-        </>
-      )}
-    </Container>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  handleClick(false);
+                }}
+                sx={{ backgroundColor: PRIMARY_COLOR }}
+              >
+                前へ
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  handleClick(true);
+                }}
+                sx={{ backgroundColor: PRIMARY_COLOR }}
+              >
+                次へ
+              </Button>
+            </Box>
+          </>
+        )}
+      </Container>
     </>
   );
 };
