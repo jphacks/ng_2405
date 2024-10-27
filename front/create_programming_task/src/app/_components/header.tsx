@@ -3,7 +3,10 @@ import { AppBar, Typography, Box } from "@mui/material";
 import { PRIMARY_COLOR } from "@/constants/color";
 import { FONT } from "@/constants/font";
 
+import Image from 'next/image';
 import HeaderLink from "./headerLink";
+import LogoImage from "../public/Logo.png";
+import Link from "next/link";
 
 import '../globals.css';
 
@@ -23,16 +26,7 @@ const Header: React.FC = () => {
           padding: "1rem",
         }}
         >
-        <Typography
-          variant="h3"
-          sx={{
-            color: "black",
-            // fontFamily: FONT,
-            fontWeight: "bold",
-          }}
-          >
-          ハックドリル
-        </Typography>
+        <Image src={LogoImage} alt='Logo' width={50} height={50} />
         <HeaderLink />
       </Box>
     </AppBar>

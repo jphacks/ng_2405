@@ -11,6 +11,7 @@ import {
   TextField,
 } from "@mui/material";
 import { PRIMARY_COLOR } from "@/constants/color";
+import Header from "../_components/header";
 
 type FormValues = {
   username: string;
@@ -52,6 +53,8 @@ const Page = () => {
   };
 
   return (
+    <>
+    <Header />
     <Container>
       <Box
         sx={{
@@ -133,6 +136,7 @@ const Page = () => {
         </Box>
       </Box>
     </Container>
+    </>
   );
 };
 
