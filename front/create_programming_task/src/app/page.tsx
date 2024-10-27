@@ -99,13 +99,15 @@ export default function Home() {
           <Image src={LogoImage} alt='Logo' width={500} height={500} />
         </div>
 
-        <div id="descript_appli" style={{fontSize: "20px", fontWeight: "bold", textAlign: "center", padding: "10px"}}>このサイトではあなたに合わせた問題を作成することができます．
+        <div id="descript_appli" style={{fontSize: "20px", fontWeight: "bold", textAlign: "center", padding: "10px"}}>
+          このサイトではあなたに合わせた問題を作成することができます．
         
         <Button
               variant="contained"
               sx={{
                 width: "80%",
-                backgroundColor: BUTTON_COLOR
+                backgroundColor: BUTTON_COLOR,
+                marginTop: "20px"
               }}
               type="submit"
             >
