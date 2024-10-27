@@ -25,6 +25,9 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { mockTasks } from "@/constants/mocks";
 import { Language } from "@/types/language";
 import { getAccessToken } from "@/lib/actions";
+import LogoImage from "./public/Logo.png";
+import Link from "next/link";
+import Image from "next/image";
 
 type FormValues = {
   language: string;
