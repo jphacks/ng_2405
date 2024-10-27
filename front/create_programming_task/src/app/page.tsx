@@ -94,12 +94,15 @@ export default function Home() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        height: "100vh",
       }}>
-        <Image src={LogoImage} alt='Logo' width={500} height={500} />
-        <div id="descript_appli">このサイトではあなたに合わせた問題を作成することができます．
+        <div style={{padding: "50px;"}}>
+          <Image src={LogoImage} alt='Logo' width={500} height={500} />
         </div>
-        <Link href='/log_in'>サービスへはこちらから</Link>
+
+        <div id="descript_appli" style={{fontSize: "20px"}}>このサイトではあなたに合わせた問題を作成することができます．
+        
+        <p><Link href='/log_in'>サービスへはこちらから</Link></p>
+        </div>
       </Box>
     </Container>
   );
