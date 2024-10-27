@@ -67,7 +67,7 @@ export default function Home() {
     const accessToken = await fetchAccessToken();
 
     const response = await fetch("http://localhost:8000/gemini", {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
