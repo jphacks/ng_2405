@@ -205,9 +205,6 @@ const Page: React.FC = () => {
                     required
                     id="outlined-required"
                     label="学習内容"
-                    sx={{
-                      width: "80%",
-                    }}
                     multiline
                     rows={3}
                   />
