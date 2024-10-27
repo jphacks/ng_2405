@@ -95,25 +95,25 @@ export default function Home() {
         alignItems: "center",
         justifyContent: "center",
       }}>
-        <div style={{padding: "50px;"}}>
+        <div style={{ padding: "50px;" }}>
           <Image src={LogoImage} alt='Logo' width={500} height={500} />
         </div>
 
-        <div id="descript_appli" style={{fontSize: "20px", fontWeight: "bold", textAlign: "center", padding: "10px"}}>
+        <div id="descript_appli" style={{ fontSize: "20px", fontWeight: "bold", textAlign: "center", padding: "10px" }}>
           このサイトではあなたに合わせた問題を作成することができます．
-        
-        <Button
-              variant="contained"
-              sx={{
-                width: "80%",
-                backgroundColor: BUTTON_COLOR,
-                marginTop: "20px"
-              }}
-              type="submit"
-              href="/log_in"
-            >
-              ログインページへ
-            </Button>
+
+          <Button
+            variant="contained"
+            sx={{
+              width: "80%",
+              backgroundColor: BUTTON_COLOR,
+              marginTop: "20px"
+            }}
+            type="submit"
+            href="/log_in"
+          >
+            ログインページへ
+          </Button>
         </div>
       </Box>
     </Container>
