@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { PRIMARY_COLOR } from "@/constants/color";
 import Header from "../_components/header";
+import { setAccessToken } from "@/lib/actions";
 
 type FormValues = {
   username: string;
@@ -65,6 +66,7 @@ const Page = () => {
       if (res.ok) {
         const resJson = await res.json();
         console.log(`access_token: ${resJson.access_token}`);
+        await setAccessToken(resJson.access_token);
         window.location.href = "/top";
       } else {
         alert("ユーザー登録に失敗しました。");
