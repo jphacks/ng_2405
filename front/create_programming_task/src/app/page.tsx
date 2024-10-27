@@ -18,47 +18,6 @@ import TaskCard from "./_components/taskCard";
 import AiTaskCard from "./_components/aiTaskCard";
 
 import type { Task } from "@/types/task";
-<<<<<<< HEAD
-import { PRIMARY_COLOR } from "@/constants/color";
-import Image from 'next/image';
-import Link from "next/link";
-import LogoImage from "./public/Logo.png"
-
-// プログラミング言語のリスト
-const languages = [
-  "Bash",
-  "C",
-  "C#",
-  "C++",
-  "Clojure",
-  "Cobol",
-  "CoffeeScript",
-  "D",
-  "Elixir",
-  "Erlang",
-  "F#",
-  "Go",
-  "Haskell",
-  "Java",
-  "JavaScript",
-  "Kotlin",
-  "MySQL",
-  "Nadesiko",
-  "Objective-C",
-  "Perl",
-  "PHP",
-  "Python2",
-  "Python3",
-  "R",
-  "Ruby",
-  "Rust",
-  "Scala",
-  "Scheme",
-  "Swift",
-  "TypeScript",
-  "VB",
-];
-=======
 import type { AiTask } from "@/types/aitask";
 import { BUTTON_COLOR, PRIMARY_COLOR } from "@/constants/color";
 import { LANGUAGES } from "@/constants/languages";
@@ -66,7 +25,6 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { mockTasks } from "@/constants/mocks";
 import { Language } from "@/types/language";
 import { getAccessToken } from "@/lib/actions";
->>>>>>> develop
 
 type FormValues = {
   language: string;
