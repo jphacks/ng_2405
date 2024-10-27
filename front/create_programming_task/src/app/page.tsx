@@ -110,6 +110,7 @@ export default function Home() {
                 marginTop: "20px"
               }}
               type="submit"
+              href="/log_in"
             >
               ログイン
             </Button>
